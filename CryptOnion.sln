@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{3038
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptOnion.Application.Terminal", "samples\CryptOnion.Application.Terminal\CryptOnion.Application.Terminal.csproj", "{A0472F6E-A361-4937-A2D8-B834B5BCB20C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptOnion.Exchange.Binance", "src\CryptOnion.Exchange.Binance\CryptOnion.Exchange.Binance.csproj", "{6B7F6E87-C7B4-4416-8306-10AED7A11548}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,8 +94,21 @@ Global
 		{A0472F6E-A361-4937-A2D8-B834B5BCB20C}.Release|x64.Build.0 = Release|Any CPU
 		{A0472F6E-A361-4937-A2D8-B834B5BCB20C}.Release|x86.ActiveCfg = Release|Any CPU
 		{A0472F6E-A361-4937-A2D8-B834B5BCB20C}.Release|x86.Build.0 = Release|Any CPU
+		{6B7F6E87-C7B4-4416-8306-10AED7A11548}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B7F6E87-C7B4-4416-8306-10AED7A11548}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B7F6E87-C7B4-4416-8306-10AED7A11548}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6B7F6E87-C7B4-4416-8306-10AED7A11548}.Debug|x64.Build.0 = Debug|Any CPU
+		{6B7F6E87-C7B4-4416-8306-10AED7A11548}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6B7F6E87-C7B4-4416-8306-10AED7A11548}.Debug|x86.Build.0 = Debug|Any CPU
+		{6B7F6E87-C7B4-4416-8306-10AED7A11548}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B7F6E87-C7B4-4416-8306-10AED7A11548}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B7F6E87-C7B4-4416-8306-10AED7A11548}.Release|x64.ActiveCfg = Release|Any CPU
+		{6B7F6E87-C7B4-4416-8306-10AED7A11548}.Release|x64.Build.0 = Release|Any CPU
+		{6B7F6E87-C7B4-4416-8306-10AED7A11548}.Release|x86.ActiveCfg = Release|Any CPU
+		{6B7F6E87-C7B4-4416-8306-10AED7A11548}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{6B7F6E87-C7B4-4416-8306-10AED7A11548} = {F0071D00-6FD4-11EB-ADCE-F5208BAA1D3E}
 		{570047BA-C0B7-436D-AB08-D1071703CF2F} = {F0071D00-6FD4-11EB-ADCE-F5208BAA1D3E}
 		{B3C78457-3986-4B29-8F98-A3300B0EEBF1} = {F0071D00-6FD4-11EB-ADCE-F5208BAA1D3E}
 		{7F7C5400-35BC-41A8-A8B0-12F09EBC567F} = {F0071D00-6FD4-11EB-ADCE-F5208BAA1D3E}

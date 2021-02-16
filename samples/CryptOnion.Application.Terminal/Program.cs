@@ -16,6 +16,7 @@ namespace CryptOnion.Application.Terminal
             services.AddHttpClient();
             services.AddCryptOnion();
             services.AddCryptOnionAllCurrencies();
+            services.AddCryptOnionExchange<Exchange.Binance.Exchange>();
             services.AddCryptOnionExchange<Exchange.Paribu.Exchange>();
 
             var provider = services.BuildServiceProvider();
