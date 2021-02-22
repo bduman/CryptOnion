@@ -6,7 +6,8 @@ namespace CryptOnion.Exchange.Binance
     {
         public Exchange(ICurrencyFinder currencyFinder, HttpClient httpClient) : base("Binance", currencyFinder)
         {
-            this.AddScheduledObservable(new OTicker(currencyFinder, httpClient));
+            this.AddScheduledObservable(new SOTicker(currencyFinder, httpClient));
+            this.AddWebSocketObservable<Ticker>(new WSOTicker());
         }
     }
 }

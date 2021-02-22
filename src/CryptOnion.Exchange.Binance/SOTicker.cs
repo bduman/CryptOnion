@@ -6,12 +6,12 @@ using System.Text.Json;
 
 namespace CryptOnion.Exchange.Binance
 {
-    public class OTicker : ScheduledObservable<Ticker>
+    public class SOTicker : ScheduledObservable<Ticker>
     {
         private readonly ICurrencyFinder _currencyFinder;
         private readonly HttpClient _client;
 
-        public OTicker(ICurrencyFinder currencyFinder, HttpClient client) : base(TimeSpan.FromSeconds(3))
+        public SOTicker(ICurrencyFinder currencyFinder, HttpClient client) : base(TimeSpan.FromSeconds(3))
         {
             this._currencyFinder = currencyFinder;
             this._client = client;
