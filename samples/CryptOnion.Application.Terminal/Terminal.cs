@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Reactive.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using CryptOnion.Application.Terminal.Extensions;
 using Spectre.Console;
 
 namespace CryptOnion.Application.Terminal
 {
-    public class Terminal : IObserver<IObservable<Ticker>>
+    public class Terminal : IObserver<IObservable<Ticker>>, IObserver<IObservable<byte>>
     {
         private readonly IAnsiConsole _terminal;
 
@@ -65,6 +66,17 @@ namespace CryptOnion.Application.Terminal
         public void OnError(Exception error)
         {
             System.Console.WriteLine("error {0}", error.Message);
+        }
+
+        public void OnNext(IObservable<byte> value)
+        {
+            value.SkipLast(1).Aggregate(new StringBuilder(), (s, b) =>
+            {
+                s.Append((char)b);
+                return s;
+            })
+            .Select(sb => sb.ToString())
+            .Subscribe(System.Console.WriteLine);
         }
     }
 }

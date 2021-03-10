@@ -3,39 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using CryptOnion.Observable;
 
-namespace CryptOnion.Exchange.Binance
+namespace CryptOnion.Exchange.Binance.Ticker
 {
-    public class OTicker : ScheduledObservable<Ticker>
+    public class DataProvider : IDataProvider<IEnumerable<CryptOnion.Ticker>>
     {
+        private readonly HttpClient _httpClient;
         private readonly ICurrencyFinder _currencyFinder;
-        private readonly HttpClient _client;
 
-        public OTicker(ICurrencyFinder currencyFinder, HttpClient client) : base(TimeSpan.FromSeconds(3))
+        public DataProvider(ICurrencyFinder currencyFinder, HttpClient httpClient)
         {
+            this._httpClient = httpClient;
             this._currencyFinder = currencyFinder;
-            this._client = client;
         }
 
         public record TickObj(string symbol, string askPrice, string bidPrice, string lowPrice, string highPrice,
                     string weightedAvgPrice, string volume, string lastPrice, string priceChange, string priceChangePercent);
 
-        protected async override IAsyncEnumerable<Ticker> GetAsyncEnumerable()
+        public async Task<IEnumerable<CryptOnion.Ticker>> ProvideAsync(CancellationToken cancellationToken)
         {
-            var responseMessage = await this._client.GetAsync("https://www.binance.com/api/v3/ticker/24hr", HttpCompletionOption.ResponseHeadersRead);
+            var responseMessage = await this._httpClient.GetAsync("https://www.binance.com/api/v3/ticker/24hr", HttpCompletionOption.ResponseHeadersRead);
             responseMessage.EnsureSuccessStatusCode();
 
             using var stream = await responseMessage.Content.ReadAsStreamAsync();
 
             var jsonObjs = await JsonSerializer.DeserializeAsync<IEnumerable<TickObj>>(stream);
 
-            foreach (var tickObj in jsonObjs)
+            var result = jsonObjs.Select(tickObj =>
             {
                 var pair = this.TryParse(tickObj.symbol);
 
                 if (pair != null)
                 {
-                    var ticker = new Ticker(pair);
+                    var ticker = new CryptOnion.Ticker(pair);
 
                     Decimal.TryParse(tickObj.askPrice, out decimal lowestAsk);
                     ticker.LowestAsk = lowestAsk;
@@ -52,12 +55,17 @@ namespace CryptOnion.Exchange.Binance
                     Decimal.TryParse(tickObj.volume, out decimal volume);
                     ticker.Volume = volume;
 
-                    yield return ticker;
+                    return ticker;
                 }
-            }
+
+                return null;
+            })
+            .Where(t => t != null);
+
+            return result;
         }
 
-        public Pair TryParse(string pair)
+        private Pair TryParse(string pair)
         {
             if (string.IsNullOrEmpty(pair))
             {

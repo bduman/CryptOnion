@@ -1,12 +1,25 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CryptOnion.Exchange.Paribu
 {
-    public sealed class Exchange : ExchangeBase
+    public class Exchange : IExchange
     {
-        public Exchange(ICurrencyFinder currencyFinder, HttpClient httpClient) : base(name: "Paribu", currencyFinder)
+        private readonly Dictionary<Type, object> _observables;
+
+        public Exchange(Ticker.Observable tickerObservable)
         {
-            this.AddScheduledObservable(new OTicker(currencyFinder, httpClient));
+            this.AddObservable(tickerObservable);
+        }
+
+        private void AddObservable<T>(IObservable<T> observable)
+        {
+            this._observables.Add(typeof(T), observable);
+        }
+
+        public IObservable<T> GetObservable<T>()
+        {
+            return this._observables.GetValueOrDefault(typeof(T)) as IObservable<T>;
         }
     }
 }
