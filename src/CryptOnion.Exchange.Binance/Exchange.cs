@@ -1,13 +1,26 @@
-using System.Net.Http;
+using System;
+using System.Collections.Generic;
 
 namespace CryptOnion.Exchange.Binance
 {
-    public class Exchange : ExchangeBase
+    public class Exchange : IExchange
     {
-        public Exchange(ICurrencyFinder currencyFinder, HttpClient httpClient) : base("Binance", currencyFinder)
+        private readonly Dictionary<Type, object> _observables;
+
+        public Exchange(Ticker.Observable tickerObservable, RealTimeTicker.Observable realTimeObservable)
         {
-            this.AddScheduledObservable(new SOTicker(currencyFinder, httpClient));
-            this.AddWebSocketObservable<Ticker>(new WSOTicker());
+            this.AddObservable(tickerObservable);
+            this.AddObservable(realTimeObservable);
+        }
+
+        private void AddObservable<T>(IObservable<T> observable)
+        {
+            this._observables.Add(typeof(T), observable);
+        }
+
+        public IObservable<T> GetObservable<T>()
+        {
+            return this._observables.GetValueOrDefault(typeof(T)) as IObservable<T>;
         }
     }
 }

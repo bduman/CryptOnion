@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using CryptOnion.Exchange;
@@ -23,15 +22,12 @@ namespace CryptOnion.Application.Terminal
 
             var terminal = new Terminal(AnsiConsole.Console);
 
-            var exchanges = provider.GetServices<ExchangeBase>();
+            var exchanges = provider.GetServices<IExchange>();
             var exchange = exchanges.First();
 
-            var ticker = exchange.GetWebSocketObservable<Ticker>();
+            var ticker = exchange.GetObservable<byte>();
 
-            ticker?.Subscribe(terminal, (t) =>
-            {
-                return t.Window(t.Where(x => x == byte.MinValue));
-            });
+            ticker?.Window(ticker?.Where(x => x == byte.MinValue)).Subscribe(terminal);
 
             //var sub = ticker?.Subscribe(terminal, (t) => t.Window(TimeSpan.FromSeconds(3)));
 
