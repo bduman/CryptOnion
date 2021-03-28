@@ -4,6 +4,6 @@ namespace CryptOnion
 {
     public interface ICurrencyFinder
     {
-        CurrencyBase Find(string code);
+        AbstractCurrency Find(string code);
     }
 }

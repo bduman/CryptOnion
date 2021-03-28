@@ -4,14 +4,14 @@ namespace CryptOnion
 {
     public sealed class Pair
     {
-        public Pair(CurrencyBase baseCurrency, CurrencyBase quoteCurrency)
+        public Pair(AbstractCurrency baseCurrency, AbstractCurrency quoteCurrency)
         {
             this.BaseCurrency = baseCurrency;
             this.QuoteCurrency = quoteCurrency;
         }
 
-        public CurrencyBase BaseCurrency { get; }
-        public CurrencyBase QuoteCurrency { get; }
+        public AbstractCurrency BaseCurrency { get; }
+        public AbstractCurrency QuoteCurrency { get; }
 
         public override string ToString()
         {

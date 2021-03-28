@@ -11,7 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<ICurrencyFinder, DefaultCurrencyFinder>((s) =>
             {
                 var currencyFinder = new DefaultCurrencyFinder();
-                var coins = s.GetServices<CurrencyBase>();
+                var coins = s.GetServices<AbstractCurrency>();
 
                 foreach (var coin in coins)
                 {
@@ -24,9 +24,9 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        public static IServiceCollection AddCryptOnionCurrency<T>(this IServiceCollection services) where T : CurrencyBase
+        public static IServiceCollection AddCryptOnionCurrency<T>(this IServiceCollection services) where T : AbstractCurrency
         {
-            services.AddSingleton<CurrencyBase, T>();
+            services.AddSingleton<AbstractCurrency, T>();
 
             return services;
         }

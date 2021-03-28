@@ -9,8 +9,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.Scan(scan =>
             {
                 scan.FromCallingAssembly()
-                    .AddClasses(c => c.AssignableTo<CurrencyBase>().Where(t => t.IsSealed))
-                    .As<CurrencyBase>()
+                    .AddClasses(c => c.AssignableTo<AbstractCurrency>().Where(t => t.IsSealed))
+                    .As<AbstractCurrency>()
                     .WithSingletonLifetime();
             });
 
