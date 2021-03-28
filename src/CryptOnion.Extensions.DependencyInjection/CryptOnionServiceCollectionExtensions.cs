@@ -8,18 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddCryptOnion(this IServiceCollection services)
         {
-            services.AddSingleton<ICurrencyFinder, DefaultCurrencyFinder>((s) =>
-            {
-                var currencyFinder = new DefaultCurrencyFinder();
-                var coins = s.GetServices<AbstractCurrency>();
-
-                foreach (var coin in coins)
-                {
-                    currencyFinder.Add(coin);
-                }
-
-                return currencyFinder;
-            });
+            services.AddSingleton<ICurrencyFinder, DefaultCurrencyFinder>();
 
             return services;
         }
