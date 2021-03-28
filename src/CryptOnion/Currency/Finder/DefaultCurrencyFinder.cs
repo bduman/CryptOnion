@@ -3,16 +3,25 @@ using CryptOnion.Currency;
 
 namespace CryptOnion
 {
-    public class DefaultCurrencyFinder : ICurrencyFinder
+    class DefaultCurrencyFinder : ICurrencyFinder
     {
         private readonly Dictionary<string, AbstractCurrency> _currencies;
 
-        public DefaultCurrencyFinder()
+        internal DefaultCurrencyFinder(IEnumerable<AbstractCurrency> currencies)
         {
             this._currencies = new Dictionary<string, AbstractCurrency>();
+            this.AddRange(currencies);
         }
 
-        public void Add(AbstractCurrency currency)
+        private void AddRange(IEnumerable<AbstractCurrency> currencies)
+        {
+            foreach (var currency in currencies)
+            {
+                this.Add(currency);
+            }
+        }
+
+        private void Add(AbstractCurrency currency)
         {
             if (!this._currencies.ContainsKey(currency.Code))
             {
