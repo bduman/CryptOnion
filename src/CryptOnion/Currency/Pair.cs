@@ -1,17 +1,15 @@
-﻿using CryptOnion.Currency;
-
-namespace CryptOnion
+﻿namespace CryptOnion.Currency
 {
     public sealed class Pair
     {
-        public Pair(AbstractCurrency baseCurrency, AbstractCurrency quoteCurrency)
+        public Pair(CurrencyBase baseCurrency, CurrencyBase quoteCurrency)
         {
             this.BaseCurrency = baseCurrency;
             this.QuoteCurrency = quoteCurrency;
         }
 
-        public AbstractCurrency BaseCurrency { get; }
-        public AbstractCurrency QuoteCurrency { get; }
+        public CurrencyBase BaseCurrency { get; }
+        public CurrencyBase QuoteCurrency { get; }
 
         public override string ToString()
         {

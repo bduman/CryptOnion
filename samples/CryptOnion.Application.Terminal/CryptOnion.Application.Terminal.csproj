@@ -7,13 +7,10 @@
 
   <ItemGroup>
     <PackageReference Include="Spectre.Console" Version="0.37.0" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\CryptOnion\CryptOnion.csproj" />
-    <ProjectReference Include="..\..\src\CryptOnion.Extensions.DependencyInjection\CryptOnion.Extensions.DependencyInjection.csproj" />
-    <ProjectReference Include="..\..\src\CryptOnion.Currency.All\CryptOnion.Currency.All.csproj" />
     <ProjectReference Include="..\..\src\CryptOnion.Exchange.Paribu\CryptOnion.Exchange.Paribu.csproj" />
     <ProjectReference Include="..\..\src\CryptOnion.Exchange.Binance\CryptOnion.Exchange.Binance.csproj" />
   </ItemGroup>

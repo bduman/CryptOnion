@@ -1,9 +1,7 @@
-using CryptOnion.Currency;
-
-namespace CryptOnion
+namespace CryptOnion.Currency.Finder
 {
     public interface ICurrencyFinder
     {
-        AbstractCurrency Find(string code);
+        CurrencyBase Find(string code);
     }
 }

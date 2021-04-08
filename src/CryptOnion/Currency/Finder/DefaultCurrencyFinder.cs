@@ -1,19 +1,18 @@
 using System.Collections.Generic;
-using CryptOnion.Currency;
 
-namespace CryptOnion
+namespace CryptOnion.Currency.Finder
 {
-    public class DefaultCurrencyFinder : ICurrencyFinder
+    class DefaultCurrencyFinder : ICurrencyFinder
     {
-        private readonly Dictionary<string, AbstractCurrency> _currencies;
+        private readonly Dictionary<string, CurrencyBase> _currencies;
 
-        public DefaultCurrencyFinder(IEnumerable<AbstractCurrency> currencies)
+        public DefaultCurrencyFinder(IEnumerable<CurrencyBase> currencies)
         {
-            this._currencies = new Dictionary<string, AbstractCurrency>();
+            this._currencies = new Dictionary<string, CurrencyBase>();
             this.AddRange(currencies);
         }
 
-        private void AddRange(IEnumerable<AbstractCurrency> currencies)
+        private void AddRange(IEnumerable<CurrencyBase> currencies)
         {
             foreach (var currency in currencies)
             {
@@ -21,7 +20,7 @@ namespace CryptOnion
             }
         }
 
-        private void Add(AbstractCurrency currency)
+        private void Add(CurrencyBase currency)
         {
             if (!this._currencies.ContainsKey(currency.Code))
             {
@@ -29,9 +28,9 @@ namespace CryptOnion
             }
         }
 
-        public AbstractCurrency Find(string code)
+        public CurrencyBase Find(string code)
         {
-            return this._currencies.GetValueOrDefault(code);
+            return this._currencies.GetValueOrDefault(code) ?? new CurrencyBase(code, code);
         }
     }
 }

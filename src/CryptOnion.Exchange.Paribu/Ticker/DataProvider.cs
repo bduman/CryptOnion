@@ -4,16 +4,18 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using CryptOnion.Currency;
+using CryptOnion.Currency.Finder;
 using CryptOnion.Observable;
 
 namespace CryptOnion.Exchange.Paribu.Ticker
 {
-    public class DataProvider : IDataProvider<IEnumerable<CryptOnion.Ticker>>
+    class DataProvider : IDataProvider<IEnumerable<CryptOnion.Ticker>>
     {
         private readonly HttpClient _httpClient;
         private readonly ICurrencyFinder _currencyFinder;
 
-        public DataProvider(ICurrencyFinder currencyFinder, HttpClient httpClient)
+        internal DataProvider(ICurrencyFinder currencyFinder, HttpClient httpClient)
         {
             this._httpClient = httpClient;
             this._currencyFinder = currencyFinder;

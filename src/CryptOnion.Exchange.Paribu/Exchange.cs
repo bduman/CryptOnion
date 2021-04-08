@@ -5,14 +5,9 @@ namespace CryptOnion.Exchange.Paribu
 {
     public class Exchange : IExchange
     {
-        private readonly Dictionary<Type, object> _observables;
+        private readonly Dictionary<Type, object> _observables = new Dictionary<Type, object>();
 
-        public Exchange(Ticker.Observable tickerObservable)
-        {
-            this.AddObservable(tickerObservable);
-        }
-
-        private void AddObservable<T>(IObservable<T> observable)
+        internal void AddObservable<T>(IObservable<T> observable)
         {
             this._observables.Add(typeof(T), observable);
         }
