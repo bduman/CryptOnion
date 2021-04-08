@@ -30,16 +30,19 @@ namespace CryptOnion.Exchange.Binance.Ticker
                 Component
                     .For<IObservable<CryptOnion.Ticker>>()
                     .ImplementedBy<SubscribeOnDecorated<CryptOnion.Ticker>>()
-                    .DependsOn(Dependency.OnValue(typeof(IScheduler), Scheduler.Default)),
+                    .DependsOn(Dependency.OnValue(typeof(IScheduler), Scheduler.Default))
+                    .Named("Binance.Ticker.SubscribeOnDecorated"),
                 Component
                     .For<IObservable<CryptOnion.Ticker>>()
                     .ImplementedBy<ObserveOnDecorated<CryptOnion.Ticker>>()
-                    .DependsOn(Dependency.OnValue(typeof(IScheduler), Scheduler.Default)),
+                    .DependsOn(Dependency.OnValue(typeof(IScheduler), Scheduler.Default))
+                    .Named("Binance.Ticker.ObserveOnDecorated"),
                 Component
                     .For<IObservable<CryptOnion.Ticker>>()
                     .ImplementedBy<Observable>()
                     .DependsOn(Dependency.OnComponent(typeof(IDataProvider<IEnumerable<CryptOnion.Ticker>>), "Binance.Ticker.DataProvider"))
                     .DependsOn(Dependency.OnValue(typeof(IInternalDelay), new DefaultInternalDelay()))
+                    .Named("Binance.Ticker.Observable")
             );
         }
     }

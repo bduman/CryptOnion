@@ -30,16 +30,19 @@ namespace CryptOnion.Exchange.Paribu.Ticker
                 Component
                     .For<IObservable<CryptOnion.Ticker>>()
                     .ImplementedBy<SubscribeOnDecorated<CryptOnion.Ticker>>()
-                    .DependsOn(Dependency.OnValue(typeof(IScheduler), Scheduler.Default)),
+                    .DependsOn(Dependency.OnValue(typeof(IScheduler), Scheduler.Default))
+                    .Named("Paribu.Ticker.SubscribeOnDecorated"),
                 Component
                     .For<IObservable<CryptOnion.Ticker>>()
                     .ImplementedBy<ObserveOnDecorated<CryptOnion.Ticker>>()
-                    .DependsOn(Dependency.OnValue(typeof(IScheduler), Scheduler.Default)),
+                    .DependsOn(Dependency.OnValue(typeof(IScheduler), Scheduler.Default))
+                    .Named("Paribu.Ticker.ObserveOnDecorated"),
                 Component
                     .For<IObservable<CryptOnion.Ticker>>()
                     .ImplementedBy<Observable>()
                     .DependsOn(Dependency.OnComponent(typeof(IDataProvider<IEnumerable<CryptOnion.Ticker>>), "Paribu.Ticker.DataProvider"))
                     .DependsOn(Dependency.OnValue(typeof(IInternalDelay), new DefaultInternalDelay()))
+                    .Named("Paribu.Ticker.Observable")
             );
         }
     }
