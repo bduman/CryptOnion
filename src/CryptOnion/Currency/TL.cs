@@ -1,6 +1,6 @@
-﻿namespace CryptOnion.Currency.All
+﻿namespace CryptOnion.Currency
 {
-    public sealed class TL : AbstractCurrency
+    public sealed class TL : CurrencyBase
     {
         public TL() : base("TL", "Turkish Lira")
         {

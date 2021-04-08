@@ -22,6 +22,7 @@ namespace CryptOnion.Observable.WebSocket
 
                     var observable = System.Reactive.Linq.Observable.Create<byte>(async (observer, subToken) =>
                     {
+                        System.Console.WriteLine("Observable ThreadId: " + System.Threading.Thread.CurrentThread.ManagedThreadId);
                         while (webSocket.State == WebSocketState.Open && !subToken.IsCancellationRequested)
                         {
                             WebSocketReceiveResult result;
@@ -50,6 +51,7 @@ namespace CryptOnion.Observable.WebSocket
 
         public IDisposable Subscribe(IObserver<byte> observer)
         {
+            System.Console.WriteLine("Subscribe ThreadId: " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             return this._observable.Subscribe(observer);
         }
     }

@@ -1,6 +1,6 @@
-namespace CryptOnion.Currency.All
+namespace CryptOnion.Currency
 {
-    public sealed class USDT : AbstractCurrency
+    public sealed class USDT : CurrencyBase
     {
         public USDT() : base("USDT", "Tether")
         {

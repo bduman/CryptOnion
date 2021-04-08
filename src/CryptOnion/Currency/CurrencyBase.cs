@@ -1,11 +1,11 @@
 ﻿namespace CryptOnion.Currency
 {
-    public abstract class AbstractCurrency
+    public class CurrencyBase
     {
         public string Code { get; private set; }
         public string Name { get; private set; }
 
-        protected AbstractCurrency(string currencyCode, string name)
+        public CurrencyBase(string currencyCode, string name)
         {
             this.Code = currencyCode;
             this.Name = name;

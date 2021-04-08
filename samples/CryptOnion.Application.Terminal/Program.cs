@@ -1,8 +1,9 @@
 ﻿using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Castle.Windsor;
+using Castle.Windsor.Installer;
 using CryptOnion.Exchange;
-using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console;
 
 namespace CryptOnion.Application.Terminal
@@ -11,21 +12,19 @@ namespace CryptOnion.Application.Terminal
     {
         static async Task Main()
         {
-            var services = new ServiceCollection();
-            services.AddHttpClient();
-            services.AddCryptOnion();
-            services.AddCryptOnionAllCurrencies();
-            services.AddCryptOnionExchange<Exchange.Binance.Exchange>();
-            services.AddCryptOnionExchange<Exchange.Paribu.Exchange>();
-
-            var provider = services.BuildServiceProvider();
+            var container = new WindsorContainer();
+            container.Install(
+                FromAssembly.Named("CryptOnion"),
+                FromAssembly.Named("CryptOnion.Exchange.Binance"),
+                FromAssembly.Named("CryptOnion.Exchange.Paribu")
+            );
 
             var terminal = new Terminal(AnsiConsole.Console);
 
-            var exchanges = provider.GetServices<IExchange>();
-            var exchange = exchanges.First();
-
+            var exchange = container.Resolve<IExchange>("Binance");
             var ticker = exchange.GetObservable<byte>();
+
+            System.Console.WriteLine("Main ThreadId: " + System.Threading.Thread.CurrentThread.ManagedThreadId);
 
             ticker?.Window(ticker?.Where(x => x == byte.MinValue)).Subscribe(terminal);
 

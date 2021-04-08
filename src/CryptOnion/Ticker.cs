@@ -1,4 +1,6 @@
-﻿namespace CryptOnion
+﻿using CryptOnion.Currency;
+
+namespace CryptOnion
 {
     public class Ticker
     {

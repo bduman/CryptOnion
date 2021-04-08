@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using CryptOnion.Currency;
+using CryptOnion.Currency.Finder;
 using CryptOnion.Observable;
 
 namespace CryptOnion.Exchange.Binance.Ticker
