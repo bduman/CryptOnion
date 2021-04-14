@@ -89,8 +89,8 @@ namespace CryptOnion.Exchange.Binance.Ticker
                 var firstCurr = clearPair.Substring(0, i + 1);
                 var secCurr = clearPair.Substring(i + 1);
 
-                var fCurr = this._currencyFinder.Find(firstCurr.ToString());
-                var sCurr = this._currencyFinder.Find(secCurr.ToString());
+                var fCurr = this._currencyFinder.Find(firstCurr);
+                var sCurr = this._currencyFinder.Find(secCurr);
 
                 if (fCurr != null && sCurr != null)
                 {
