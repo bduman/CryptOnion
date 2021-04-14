@@ -26,17 +26,25 @@ namespace CryptOnion.Exchange.Paribu.Ticker
                 Component
                     .For<IObservable<CryptOnion.Ticker>>()
                     .ImplementedBy<ShareDecorated<CryptOnion.Ticker>>()
+                    .DependsOn(Dependency.OnComponent(typeof(IObservable<CryptOnion.Ticker>), "Paribu.Ticker.SubscribeOnDecorated"))
                     .Named("Paribu.Ticker"),
                 Component
                     .For<IObservable<CryptOnion.Ticker>>()
                     .ImplementedBy<SubscribeOnDecorated<CryptOnion.Ticker>>()
                     .DependsOn(Dependency.OnValue(typeof(IScheduler), Scheduler.Default))
+                    .DependsOn(Dependency.OnComponent(typeof(IObservable<CryptOnion.Ticker>), "Paribu.Ticker.ObserveOnDecorated"))
                     .Named("Paribu.Ticker.SubscribeOnDecorated"),
                 Component
                     .For<IObservable<CryptOnion.Ticker>>()
                     .ImplementedBy<ObserveOnDecorated<CryptOnion.Ticker>>()
                     .DependsOn(Dependency.OnValue(typeof(IScheduler), Scheduler.Default))
+                    .DependsOn(Dependency.OnComponent(typeof(IObservable<CryptOnion.Ticker>), "Paribu.Ticker.Filter"))
                     .Named("Paribu.Ticker.ObserveOnDecorated"),
+                Component
+                    .For<IObservable<CryptOnion.Ticker>>()
+                    .ImplementedBy<FilterDecorated<CryptOnion.Ticker>>()
+                    .DependsOn(Dependency.OnComponent(typeof(IObservable<CryptOnion.Ticker>), "Paribu.Ticker.Observable"))
+                    .Named("Paribu.Ticker.Filter"),
                 Component
                     .For<IObservable<CryptOnion.Ticker>>()
                     .ImplementedBy<Observable>()

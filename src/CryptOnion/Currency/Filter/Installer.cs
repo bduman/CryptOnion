@@ -1,10 +1,8 @@
-using System.Net.Http;
 using Castle.MicroKernel.Registration;
-using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 
-namespace CryptOnion
+namespace CryptOnion.Currency.Filter
 {
     public class Installer : IWindsorInstaller
     {
@@ -12,11 +10,10 @@ namespace CryptOnion
         {
             container.Register(
                 Component
-                    .For<HttpClient>()
-                    .LifestyleTransient()
+                    .For(typeof(IFilterHandler<>))
+                    .ImplementedBy(typeof(GenericFilterHandler<>))
+                    .LifestyleSingleton()
             );
-
-            container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel, allowEmptyCollections: true));
         }
     }
 }

@@ -1,9 +1,13 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
+using CryptOnion.Application.Terminal.Filters;
+using CryptOnion.Currency.Filter;
 using CryptOnion.Exchange;
+using CryptOnion.Observable;
 using Spectre.Console;
 
 namespace CryptOnion.Application.Terminal
@@ -21,14 +25,16 @@ namespace CryptOnion.Application.Terminal
 
             var terminal = new Terminal(AnsiConsole.Console);
 
-            var exchange = container.Resolve<IExchange>("Binance");
-            var ticker = exchange.GetObservable<byte>();
+            var exchange = container.Resolve<IExchange>("Paribu");
+            var ticker = exchange.GetObservable<Ticker>();
 
-            System.Console.WriteLine("Main ThreadId: " + System.Threading.Thread.CurrentThread.ManagedThreadId);
+            var tickerFilterHandler = container.Resolve<IFilterHandler<Ticker>>();
+            tickerFilterHandler.Add(new HOTFilter());
+            tickerFilterHandler.Add(new NonTLFilter());
 
-            ticker?.Window(ticker?.Where(x => x == byte.MinValue)).Subscribe(terminal);
+            //ticker?.Window(ticker?.Where(x => x == byte.MinValue)).Subscribe(terminal);
 
-            //var sub = ticker?.Subscribe(terminal, (t) => t.Window(TimeSpan.FromSeconds(3)));
+            var sub = ticker.Window(TimeSpan.FromSeconds(3)).Subscribe(terminal);
 
             await terminal.Start();
         }

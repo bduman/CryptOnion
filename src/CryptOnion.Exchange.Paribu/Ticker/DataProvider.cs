@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using CryptOnion.Currency;
@@ -15,7 +16,7 @@ namespace CryptOnion.Exchange.Paribu.Ticker
         private readonly HttpClient _httpClient;
         private readonly ICurrencyFinder _currencyFinder;
 
-        internal DataProvider(ICurrencyFinder currencyFinder, HttpClient httpClient)
+        public DataProvider(ICurrencyFinder currencyFinder, HttpClient httpClient)
         {
             this._httpClient = httpClient;
             this._currencyFinder = currencyFinder;
@@ -31,7 +32,10 @@ namespace CryptOnion.Exchange.Paribu.Ticker
 
             using var stream = await responseMessage.Content.ReadAsStreamAsync();
 
-            var jsonObj = await JsonSerializer.DeserializeAsync<Dictionary<string, TickObj>>(stream);
+            var jsonObj = await JsonSerializer.DeserializeAsync<Dictionary<string, TickObj>>(stream, new JsonSerializerOptions()
+            {
+                NumberHandling = JsonNumberHandling.AllowReadingFromString
+            });
 
             var result = jsonObj.Select(tickObj =>
             {
